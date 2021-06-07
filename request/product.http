@@ -1,0 +1,13 @@
+@api = http://localhost:3000/products
+
+GET {{api}}
+
+###
+POST {{api}}
+content-type: application/json
+
+{
+    "name": "Tacldo21",
+    "description": "Tecaldo mecanoc apra programr",
+    "quantity":20
+}

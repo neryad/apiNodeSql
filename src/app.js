@@ -7,6 +7,11 @@ const app = express();
 
 app.set('port', config.port);
 
+// middlewarees
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(productsRoutes);
 
 export default app;
