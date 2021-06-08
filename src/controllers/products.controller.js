@@ -1,9 +1,9 @@
-import { getConnection, sql } from '../database/connections';
+import { getConnection, sql, queries } from '../database';
 
 export const getProducts = async (req, res) => {
   try {
     const pool = await getConnection();
-    const result = await pool.request().query('SELECT * FROM Products ');
+    const result = await pool.request().query(queries.getAllProducts);
 
     res.json(result.recordset);
   } catch (error) {
@@ -30,13 +30,58 @@ export const createNewProduct = async (req, res) => {
       .input('name', sql.VarChar, name)
       .input('description', sql.VarChar, description)
       .input('quantity', sql.Int, quantity)
-      .query(
-        'INSERT INTO Products (name, description , quantity) VALUES (@name, @description , @quantity)'
-      );
+      .query(queries.createProduct);
 
     res.json({ name, description, quantity });
   } catch (error) {
     res.status(500);
     res.send(error.message);
   }
+};
+
+export const getProductById = async (req, res) => {
+  const { id } = req.params;
+  const pool = await getConnection();
+  const result = await pool
+    .request()
+    .input('Id', id)
+    .query(queries.getProductById);
+  res.send(result.recordset[0]);
+};
+
+export const deleteProductById = async (req, res) => {
+  const { id } = req.params;
+  const pool = await getConnection();
+  const result = await pool
+    .request()
+    .input('Id', id)
+    .query(queries.deleteProduct);
+  res.send(result);
+};
+
+export const getTotalProduct = async (req, res) => {
+  const pool = await getConnection();
+  const result = await pool.request().query(queries.getTotalProduct);
+  res.json(result.recordset[0]['']);
+};
+
+export const updateProductById = async (req, res) => {
+  const { name, description, quantity } = req.body;
+  const { id } = req.params;
+
+  if (name == null || description == null || quantity == null) {
+    return res.status(400).json({ msg: 'Bad request. Please fill all fields' });
+  }
+
+  const pool = await getConnection();
+
+  await pool
+    .request()
+    .input('name', sql.VarChar, name)
+    .input('description', sql.VarChar, description)
+    .input('quantity', sql.Int, quantity)
+    .input('id', sql.Int, id)
+    .query(queries.updateProductById);
+
+  res.json({ name, description, quantity });
 };
