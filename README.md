@@ -21,8 +21,26 @@ DB_Database = youDatabaseName
 
 If you are using vs code you can install rest client plugin 
 for test the end-points i will be a folder called request with the configurations
-
 ```
+For Run in develoment Mode :
+
+```bash
+npm run dev  
+```
+
+For build :
+
+```bash
+npm run build
+```
+
+For run in production mode :
+
+```bash
+npm run start
+```
+
+
 
 ## Used packages
     cors,
@@ -30,6 +48,14 @@ for test the end-points i will be a folder called request with the configuration
     express,
     morgan,
     mssql,
+## Dev packages
+   
+    @babel/cli,
+    @babel/core,
+    @babel/node,
+    @babel/plugin-transform-runtime,
+    @babel/preset-env
+    nodemon
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
