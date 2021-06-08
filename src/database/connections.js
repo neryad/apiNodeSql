@@ -1,10 +1,10 @@
 import sql from 'mssql';
-
+import config from '../config';
 const dbSettings = {
-  user: 'dante1989_SQLLogin_1',
-  password: 'an4s4ilyhh',
-  server: 'apinode.mssql.somee.com',
-  database: 'apinode',
+  user: config.dbUser,
+  password: config.dbPassword,
+  server: config.dbServer,
+  database: config.dbDatabase,
   options: {
     encrypt: true,
     trustServerCertificate: true,
